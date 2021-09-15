@@ -194,8 +194,8 @@ def train(args, train_dataset, model, tokenizer):
             duration = now - last
             cnt+=1
             time_p += duration
-            if cnt % 10 ==0:
-                print("Time cost(100 iters): ", time_p)
+            if cnt % 1000 ==0:
+                print("Time cost(1000 iters): ", time_p)
                 time_p = 0
             print('%lf %lf' % (now, args.per_gpu_train_batch_size / duration), file=f)
             # Skip past any already trained steps if resuming training
@@ -278,7 +278,7 @@ def train(args, train_dataset, model, tokenizer):
                     torch.save(optimizer.state_dict(), os.path.join(output_dir, "optimizer.pt"))
                     torch.save(scheduler.state_dict(), os.path.join(output_dir, "scheduler.pt"))
                     logger.info("Saving optimizer and scheduler states to %s", output_dir)
-            if step > 3000:
+            if step > 30000:
                 step14.record()
                 torch.cuda.synchronize()
                 print("JCT", step1.elapsed_time(step14))
